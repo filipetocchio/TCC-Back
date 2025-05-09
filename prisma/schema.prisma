@@ -1,0 +1,68 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            Int       @id @default(autoincrement())
+  email         String    @unique
+  password      String
+  refreshToken  String?   @unique
+  nomeCompleto  String
+  telefone      String?
+  cpf           String    @unique
+  dataCadastro  DateTime  @default(now())
+  propriedades  UsuariosPropriedades[]
+}
+
+model Propriedades {
+  id                    Int       @id @default(autoincrement())
+  nomePropriedade       String
+  enderecoCep           String?
+  enderecoCidade        String?
+  enderecoBairro        String?
+  enderecoLogradouro    String?
+  enderecoNumero        String?
+  enderecoComplemento   String?
+  enderecoPontoReferencia String?
+  tipo                  String    // Casa, Apartamento, Chacara, Lote, Outros
+  valorEstimado         Float?
+  documento             String?
+  dataCadastro          DateTime  @default(now())
+  usuarios              UsuariosPropriedades[]
+  fotos                 FotosPropriedade[]
+  documentos            DocumentosPropriedade[]
+}
+
+model UsuariosPropriedades {
+  id            Int       @id @default(autoincrement())
+  idUsuario     Int
+  idPropriedade Int
+  permissao     String    // proprietario_master, usuario_comum
+  dataVinculo   DateTime  @default(now())
+  usuario       User      @relation(fields: [idUsuario], references: [id])
+  propriedade   Propriedades @relation(fields: [idPropriedade], references: [id])
+
+  @@unique([idUsuario, idPropriedade])
+}
+
+model FotosPropriedade {
+  id            Int       @id @default(autoincrement())
+  idPropriedade Int
+  documento     String
+  dataUpload    DateTime  @default(now())
+  propriedade   Propriedades @relation(fields: [idPropriedade], references: [id])
+}
+
+model DocumentosPropriedade {
+  id            Int       @id @default(autoincrement())
+  idPropriedade Int
+  tipoDocumento String    // IPTU, Matricula, Conta_de_Luz, Outros
+  documento     String
+  dataUpload    DateTime  @default(now())
+  propriedade   Propriedades @relation(fields: [idPropriedade], references: [id])
+}
