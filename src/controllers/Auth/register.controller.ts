@@ -30,17 +30,6 @@ const registerAuth = async (req: Request, res: Response) => {
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    const accessToken = jwt.sign(
-      { email },
-      process.env.ACCESS_TOKEN_SECRET as string,
-      { expiresIn: "6h" }
-    );
-    const refreshToken = jwt.sign(
-      { email },
-      process.env.REFRESH_TOKEN_SECRET as string,
-      { expiresIn: "1d" }
-    );
-
     const user = await prisma.user.create({
       data: {
         email,
@@ -48,8 +37,25 @@ const registerAuth = async (req: Request, res: Response) => {
         nomeCompleto,
         cpf,
         telefone,
-        refreshToken,
+        refreshToken: "",
       },
+    });
+
+    const accessToken = jwt.sign(
+      { userId: user.id, email: user.email },
+      process.env.ACCESS_TOKEN_SECRET as string,
+      { expiresIn: "6h" }
+    );
+
+    const refreshToken = jwt.sign(
+      { userId: user.id, email: user.email },
+      process.env.REFRESH_TOKEN_SECRET as string,
+      { expiresIn: "1d" }
+    );
+
+    await prisma.user.update({
+      where: { id: user.id },
+      data: { refreshToken },
     });
 
     res.cookie("jwt", refreshToken, {
@@ -76,7 +82,6 @@ const registerAuth = async (req: Request, res: Response) => {
         message: error.errors[0].message,
       });
     }
-
     return res.status(500).json({
       success: false,
       error: "Erro interno do servidor.",

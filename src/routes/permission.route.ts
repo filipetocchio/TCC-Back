@@ -1,12 +1,20 @@
 import express from "express";
-// import { getPropertyUsersPermission } from "../controllers/Permission/getPropertyUsers.Permission.controller";
-// import { addUsersToPropertyPermission } from "../controllers/Permission/addUsersToProperty.Permission.controller
-// import { updateUserPermission } from "../controllers/Permission/updateUser.Permission.controller";
-// import { removeUserFromPropertyPermission } from "../controllers/Permission/removeUserFromProperty.Permission.controller";
+import { linkUserPermission } from "../controllers/Permission/usersToProperty.Permission.controller";
+import { getUsuariosPropriedades } from "../controllers/Permission/get.Permission.controller";
+import { getByIDsuariosPropriedades } from "../controllers/Permission/getByID.Permission.controller";
+import { getPropertyUsersPermission } from "../controllers/Permission/getPropertyUsers.Permission.controller";
+import { getUserPropertiesPermission } from "../controllers/Permission/getUserProperties.Permission.controller";
+import { updateUserPermission } from "../controllers/Permission/updateUser.Permission.controller";
+import { removeUserFromPropertyPermission } from "../controllers/Permission/removeUserFromProperty.Permission.controller";
+import { removeUserFromPropertyPermissionById } from "../controllers/Permission/removeUserFromPropertyByID.Permission.controller";
 
 export const permission = express.Router();
 
-// permission.get("/getUser", getPropertyUsersPermission);
-// permission.post("/addUser", addUsersToPropertyPermission);
-// permission.put("/updateUser", updateUserPermission);
-// permission.delete("/removeUser", removeUserFromPropertyPermission);
+permission.post("/addUser", linkUserPermission);
+permission.get("/", getUsuariosPropriedades)
+permission.get("/:id", getByIDsuariosPropriedades)                                                    
+permission.get("/getPropertyUsers/:id", getPropertyUsersPermission);
+permission.get("/getUserProperties/:id", getUserPropertiesPermission);
+permission.put("/updateUser", updateUserPermission);
+permission.delete("/", removeUserFromPropertyPermission);
+permission.delete("/:id", removeUserFromPropertyPermissionById);

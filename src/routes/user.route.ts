@@ -1,10 +1,14 @@
 import express from "express";
-// import { getUser } from "../controllers/User/get.User.controller";
-// import { updateUser } from "../controllers/User/update.User.controller";
-// import { deleteUser } from "../controllers/User/delete.User.controller";
+import { getUser } from "../controllers/User/get.User.controller";
+import { getUserById } from "../controllers/User/getById.User.controller";
+import { updateUser } from "../controllers/User/update.User.controller";
+import { deleteUser } from "../controllers/User/delete.User.controller";
+import { deleteUserById } from "../controllers/User/deleteById.User.controller";
 
 export const user = express.Router();
 
-// user.get("/", getUser);
-// user.put("/", updateUser);
-// user.delete("/", deleteUser);
+user.get("/", getUser);
+user.get("/:id", getUserById);
+user.put("/:id", updateUser);
+user.delete("/", deleteUser);
+user.delete("/:id", deleteUserById);

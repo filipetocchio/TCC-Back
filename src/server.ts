@@ -11,6 +11,7 @@ const app = express();
 const PORT = process.env.PORT || 8001;
 
 // Middlewares globais
+app.set('json spaces', 2);
 app.use(logger);
 app.use(cors(corsOptions));
 app.use(cookieParser());

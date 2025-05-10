@@ -17,6 +17,13 @@ model User {
   cpf           String    @unique
   dataCadastro  DateTime  @default(now())
   propriedades  UsuariosPropriedades[]
+
+// log
+  openedAt   DateTime  @default(now())
+  closedAt   DateTime?
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+  excludedAt DateTime?
 }
 
 model Propriedades {
@@ -36,18 +43,32 @@ model Propriedades {
   usuarios              UsuariosPropriedades[]
   fotos                 FotosPropriedade[]
   documentos            DocumentosPropriedade[]
+
+// log
+  openedAt   DateTime  @default(now())
+  closedAt   DateTime?
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+  excludedAt DateTime?
 }
 
 model UsuariosPropriedades {
   id            Int       @id @default(autoincrement())
   idUsuario     Int
   idPropriedade Int
-  permissao     String    // proprietario_master, usuario_comum
+  permissao     String    // proprietario_master, proprietario_comum
   dataVinculo   DateTime  @default(now())
   usuario       User      @relation(fields: [idUsuario], references: [id])
   propriedade   Propriedades @relation(fields: [idPropriedade], references: [id])
 
   @@unique([idUsuario, idPropriedade])
+
+// log
+  openedAt   DateTime  @default(now())
+  closedAt   DateTime?
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+  excludedAt DateTime?
 }
 
 model FotosPropriedade {
@@ -56,6 +77,13 @@ model FotosPropriedade {
   documento     String
   dataUpload    DateTime  @default(now())
   propriedade   Propriedades @relation(fields: [idPropriedade], references: [id])
+
+// log
+  openedAt   DateTime  @default(now())
+  closedAt   DateTime?
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+  excludedAt DateTime?
 }
 
 model DocumentosPropriedade {
@@ -65,4 +93,11 @@ model DocumentosPropriedade {
   documento     String
   dataUpload    DateTime  @default(now())
   propriedade   Propriedades @relation(fields: [idPropriedade], references: [id])
+
+// log
+  openedAt   DateTime  @default(now())
+  closedAt   DateTime?
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+  excludedAt DateTime?
 }
