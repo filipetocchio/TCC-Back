@@ -3,6 +3,7 @@ import { Request, Response } from "express";
 import { z } from "zod";
 
 const getUserSchema = z.object({
+<<<<<<< HEAD
   limit: z
     .string()
     .optional()
@@ -13,6 +14,10 @@ const getUserSchema = z.object({
     .optional()
     .transform(val => (val ? parseInt(val, 10) : 1))
     .refine(val => val > 0, { message: "Page must be a positive number." }),
+=======
+  limit: z.string().optional().transform(val => (val ? parseInt(val, 10) : 10)).refine(val => val > 0, { message: "Limit must be a positive number." }),
+  page: z.string().optional().transform(val => (val ? parseInt(val, 10) : 1)).refine(val => val > 0, { message: "Page must be a positive number." }),
+>>>>>>> 42488353930e69af7d9f0393dc4071d6ec942822
   search: z.string().optional(),
   showDeleted: z.enum(["true", "false", "only"]).optional().default("false"),
 });
@@ -26,9 +31,15 @@ const getUser = async (req: Request, res: Response) => {
 
     if (search) {
       where.OR = [
+<<<<<<< HEAD
         { email: { contains: search, mode: "insensitive" } },
         { nomeCompleto: { contains: search, mode: "insensitive" } },
         { cpf: { contains: search, mode: "insensitive" } },
+=======
+        { email: { contains: search } },
+        { nomeCompleto: { contains: search } },
+        { cpf: { contains: search } },
+>>>>>>> 42488353930e69af7d9f0393dc4071d6ec942822
       ];
     }
 
@@ -82,7 +93,11 @@ const getUser = async (req: Request, res: Response) => {
     return res.status(500).json({
       success: false,
       error: "Erro interno do servidor.",
+<<<<<<< HEAD
       message: error instanceof Error ? error.message : "Erro interno do servidor.",
+=======
+      message: error.message || "Erro interno do servidor.",
+>>>>>>> 42488353930e69af7d9f0393dc4071d6ec942822
     });
   }
 };

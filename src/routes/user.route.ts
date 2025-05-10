@@ -5,6 +5,7 @@ import { updateUser } from "../controllers/User/update.User.controller";
 import { deleteUser } from "../controllers/User/delete.User.controller";
 import { deleteUserById } from "../controllers/User/deleteById.User.controller";
 
+
 export const user = express.Router();
 
 user.get("/", getUser);

@@ -63,12 +63,14 @@ model UsuariosPropriedades {
 
   @@unique([idUsuario, idPropriedade])
 
+
 // log
   openedAt   DateTime  @default(now())
   closedAt   DateTime?
   createdAt  DateTime  @default(now())
   updatedAt  DateTime  @updatedAt
   excludedAt DateTime?
+
 }
 
 model FotosPropriedade {
@@ -84,6 +86,7 @@ model FotosPropriedade {
   createdAt  DateTime  @default(now())
   updatedAt  DateTime  @updatedAt
   excludedAt DateTime?
+
 }
 
 model DocumentosPropriedade {
