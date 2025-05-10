@@ -1,5 +1,20 @@
 # Qota
 
+# comandos do back
+
+## Instalar dependencias do node:
+```bash
+npm i
+```
+## Rodar migration:
+```bash
+npm run migrate
+```
+## Rodar servidor:
+```bash
+npm run dev
+```
+
 # Documentação da API - Get's
 
 Abaixo, você encontrará informações sobre os parâmetros de consulta suportados pelos endpoints Get.

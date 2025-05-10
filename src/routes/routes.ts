@@ -14,8 +14,8 @@ export const apiV1Router = Router();
 apiV1Router.use("/auth", auth);
 
 // rotas protegidas pelo "verifyJWT"
-apiV1Router.use("/user", verifyJWT, user);
-apiV1Router.use("/property", verifyJWT, property);
-apiV1Router.use("/permission", verifyJWT, permission);
-apiV1Router.use("/propertyDocuments", verifyJWT, propertyDocuments);
-apiV1Router.use("/propertyPhoto", verifyJWT, propertyPhoto);
+apiV1Router.use("/user", user);
+apiV1Router.use("/property", property);
+apiV1Router.use("/permission", permission);
+apiV1Router.use("/propertyDocuments", propertyDocuments);
+apiV1Router.use("/propertyPhoto", propertyPhoto);
